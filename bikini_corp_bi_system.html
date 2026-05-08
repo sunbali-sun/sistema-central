@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AQUA CORP — Business Intelligence Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--c-navy:#0A0E1A;--c-navy2:#0D1321;--c-blue:#1A2744;--c-azure:#1E6FD9;--c-neon:#3B9EFF;--c-neon2:#5BB8FF;
+--c-white:#F5F7FA;--c-gray:#8A95A8;--c-border:#1E2D4A;--c-card:#111827;
+--c-gold:#C9A84C;--c-gold2:#E8C96A;--c-gold3:#F5E0A0;--c-black:#050709;--c-black2:#090C12;
+--c-dark:#0C0E14;--c-dgray:#1A1C24;--c-dgray2:#242836;--c-text:#D4C9A8;--c-text2:#8A8070;
+--font-main:'Syne',sans-serif;--font-mono:'DM Mono',monospace;--font-serif:'Cormorant Garamond',serif;
+}
+body{font-family:var(--font-main);background:var(--c-navy);color:var(--c-white);overflow-x:hidden}
+.screen{display:none;min-height:100vh}
+.screen.active{display:flex;flex-direction:column}
+
+/* === LANDING === */
+#landing{background:linear-gradient(135deg,#050A14 0%,#0A1628 40%,#071020 100%);position:relative;overflow:hidden}
+.land-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(30,111,217,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(30,111,217,.06) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+.land-orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
+.orb1{width:600px;height:600px;background:rgba(30,111,217,.15);top:-200px;right:-100px}
+.orb2{width:400px;height:400px;background:rgba(59,158,255,.08);bottom:100px;left:-100px}
+.land-nav{display:flex;align-items:center;justify-content:space-between;padding:24px 60px;position:relative;z-index:10;border-bottom:1px solid rgba(30,111,217,.15)}
+.logo-wrap{display:flex;align-items:center;gap:12px}
+.logo-mark{width:36px;height:36px;background:linear-gradient(135deg,var(--c-azure),var(--c-neon));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#fff;letter-spacing:-1px}
+.logo-text{font-size:18px;font-weight:700;letter-spacing:2px;color:var(--c-white)}
+.logo-sub{font-size:10px;font-family:var(--font-mono);color:var(--c-gray);letter-spacing:4px;display:block;margin-top:2px}
+.land-cta-row{display:flex;gap:12px}
+.btn{padding:10px 24px;border-radius:6px;font-family:var(--font-main);font-size:13px;font-weight:600;cursor:pointer;letter-spacing:.5px;transition:.2s}
+.btn-outline{background:transparent;border:1px solid rgba(59,158,255,.4);color:var(--c-neon)}
+.btn-outline:hover{background:rgba(59,158,255,.1)}
+.btn-primary{background:var(--c-azure);border:1px solid var(--c-neon);color:#fff}
+.btn-primary:hover{background:var(--c-neon)}
+.land-hero{flex:1;display:flex;align-items:center;justify-content:center;padding:80px 60px;position:relative;z-index:5}
+.hero-inner{max-width:720px;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(30,111,217,.15);border:1px solid rgba(59,158,255,.2);border-radius:100px;padding:6px 16px;font-size:11px;font-family:var(--font-mono);color:var(--c-neon2);letter-spacing:2px;margin-bottom:32px}
+.badge-dot{width:6px;height:6px;background:var(--c-neon);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+.hero-h1{font-size:72px;font-weight:800;line-height:1.0;letter-spacing:-3px;margin-bottom:8px;background:linear-gradient(135deg,#fff 30%,var(--c-neon2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-h1-gold{font-size:72px;font-weight:800;line-height:1.0;letter-spacing:-3px;background:linear-gradient(135deg,var(--c-gold2),var(--c-gold3));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-size:16px;color:var(--c-gray);margin:24px 0 40px;line-height:1.8;max-width:560px;margin-left:auto;margin-right:auto}
+.hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn-hero{padding:14px 36px;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;letter-spacing:.3px;transition:.25s}
+.btn-hero-blue{background:var(--c-azure);border:1px solid var(--c-neon);color:#fff;box-shadow:0 0 30px rgba(30,111,217,.3)}
+.btn-hero-blue:hover{background:var(--c-neon);box-shadow:0 0 50px rgba(59,158,255,.4);transform:translateY(-1px)}
+.btn-hero-gold{background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.4);color:var(--c-gold2)}
+.btn-hero-gold:hover{background:rgba(201,168,76,.2);transform:translateY(-1px)}
+.land-stats{display:flex;justify-content:center;gap:60px;padding:40px 60px;border-top:1px solid rgba(255,255,255,.05);position:relative;z-index:5}
+.stat-item{text-align:center}
+.stat-num{font-size:32px;font-weight:800;background:linear-gradient(135deg,#fff,var(--c-neon2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-lbl{font-size:11px;font-family:var(--font-mono);color:var(--c-gray);letter-spacing:2px;margin-top:4px}
+.modules-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(30,111,217,.1);margin:0 60px 60px;border:1px solid rgba(30,111,217,.15);border-radius:12px;overflow:hidden}
+.mod-card{padding:24px;background:#070D1A;cursor:pointer;transition:.2s}
+.mod-card:hover{background:rgba(30,111,217,.1)}
+.mod-icon{width:40px;height:40px;border-radius:8px;background:rgba(30,111,217,.2);border:1px solid rgba(59,158,255,.2);display:flex;align-items:center;justify-content:center;margin-bottom:12px;font-size:18px}
+.mod-title{font-size:13px;font-weight:600;margin-bottom:4px}
+.mod-desc{font-size:11px;color:var(--c-gray);line-height:1.6}
+
+/* === LOGIN === */
+#login{background:radial-gradient(ellipse at 50% 0%,#0D1A30 0%,#060A12 60%);justify-content:center;align-items:center;min-height:100vh}
+.login-wrap{width:440px;padding:48px;background:rgba(13,19,33,.8);border:1px solid rgba(30,111,217,.2);border-radius:16px;backdrop-filter:blur(20px)}
+.login-logo{display:flex;align-items:center;gap:10px;margin-bottom:40px;justify-content:center}
+.login-title{font-size:22px;font-weight:700;text-align:center;margin-bottom:8px}
+.login-sub{font-size:13px;color:var(--c-gray);text-align:center;margin-bottom:32px;font-family:var(--font-mono)}
+.input-group{margin-bottom:20px}
+.input-label{font-size:11px;font-family:var(--font-mono);color:var(--c-gray);letter-spacing:2px;margin-bottom:8px;display:block}
+.input-field{width:100%;padding:12px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(30,111,217,.3);border-radius:8px;color:var(--c-white);font-family:var(--font-main);font-size:14px;outline:none;transition:.2s}
+.input-field:focus{border-color:var(--c-neon);background:rgba(59,158,255,.05)}
+.access-select{display:flex;gap:8px;margin-bottom:28px}
+.access-btn{flex:1;padding:10px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:.2s;text-align:center;border:1px solid rgba(30,111,217,.3);background:transparent;color:var(--c-gray)}
+.access-btn.sel-op{background:rgba(30,111,217,.2);border-color:var(--c-azure);color:var(--c-neon)}
+.access-btn.sel-exec{background:rgba(201,168,76,.1);border-color:rgba(201,168,76,.4);color:var(--c-gold2)}
+.btn-login{width:100%;padding:14px;background:var(--c-azure);border:1px solid var(--c-neon);border-radius:8px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;letter-spacing:1px;transition:.25s}
+.btn-login:hover{background:var(--c-neon);box-shadow:0 0 30px rgba(59,158,255,.3)}
+.mfa-row{display:flex;gap:8px;margin-bottom:20px}
+.mfa-digit{flex:1;padding:12px 8px;text-align:center;background:rgba(255,255,255,.04);border:1px solid rgba(30,111,217,.3);border-radius:8px;color:var(--c-white);font-family:var(--font-mono);font-size:20px;outline:none}
+.sec-badges{display:flex;gap:8px;justify-content:center;margin-top:24px;flex-wrap:wrap}
+.sec-badge{font-size:9px;font-family:var(--font-mono);padding:4px 10px;border-radius:100px;border:1px solid;letter-spacing:1px}
+
+/* === SISTEMA GERAL (OPERATIONAL) === */
+#system-op{flex-direction:row;background:var(--c-navy);min-height:100vh}
+.sidebar{width:240px;min-height:100vh;background:#080D18;border-right:1px solid var(--c-border);display:flex;flex-direction:column;flex-shrink:0}
+.sb-logo{padding:20px 20px;border-bottom:1px solid var(--c-border);display:flex;align-items:center;gap:10px}
+.sb-user{padding:16px 20px;border-bottom:1px solid var(--c-border);display:flex;align-items:center;gap:10px}
+.avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--c-azure),var(--c-neon));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.sb-user-info small{font-size:10px;color:var(--c-gray);font-family:var(--font-mono)}
+.sb-user-info p{font-size:12px;font-weight:600}
+.sb-nav{flex:1;padding:16px 0;overflow-y:auto}
+.sb-section{font-size:9px;font-family:var(--font-mono);color:var(--c-gray);letter-spacing:3px;padding:12px 20px 6px}
+.sb-item{display:flex;align-items:center;gap:10px;padding:9px 20px;font-size:13px;cursor:pointer;transition:.15s;border-left:2px solid transparent}
+.sb-item:hover{background:rgba(59,158,255,.06)}
+.sb-item.active{background:rgba(30,111,217,.12);border-left-color:var(--c-azure);color:var(--c-neon)}
+.sb-item-icon{width:18px;text-align:center;font-size:14px;opacity:.7}
+.sb-badge{margin-left:auto;background:var(--c-azure);color:#fff;font-size:9px;padding:2px 6px;border-radius:100px;font-family:var(--font-mono)}
+.sb-bottom{padding:16px 20px;border-top:1px solid var(--c-border)}
+.op-main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.op-topbar{padding:14px 28px;border-bottom:1px solid var(--c-border);display:flex;align-items:center;gap:16px;background:#070C17}
+.op-topbar-title{font-size:15px;font-weight:700;flex:1}
+.op-topbar-right{display:flex;align-items:center;gap:12px}
+.notif-btn{width:34px;height:34px;border-radius:8px;border:1px solid var(--c-border);background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;transition:.2s;font-size:15px}
+.notif-btn:hover{background:rgba(59,158,255,.1);border-color:var(--c-azure)}
+.notif-dot{position:absolute;top:6px;right:6px;width:6px;height:6px;background:var(--c-neon);border-radius:50%}
+.op-content{flex:1;padding:24px 28px;overflow-y:auto}
+.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.page-title{font-size:20px;font-weight:700}
+.page-sub{font-size:12px;color:var(--c-gray);font-family:var(--font-mono);margin-top:2px}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.kpi-card{background:var(--c-card);border:1px solid var(--c-border);border-radius:12px;padding:20px}
+.kpi-label{font-size:11px;font-family:var(--font-mono);color:var(--c-gray);letter-spacing:1px;margin-bottom:8px}
+.kpi-val{font-size:26px;font-weight:800}
+.kpi-change{font-size:11px;margin-top:6px;font-family:var(--font-mono)}
+.kpi-pos{color:#22D3AA}
+.kpi-neg{color:#F87171}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.widget{background:var(--c-card);border:1px solid var(--c-border);border-radius:12px;padding:20px}
+.widget-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.widget-title{font-size:13px;font-weight:700}
+.widget-sub{font-size:10px;color:var(--c-gray);font-family:var(--font-mono)}
+.chart-bar-row{display:flex;align-items:flex-end;gap:4px;height:80px;margin-top:8px}
+.bar{background:linear-gradient(180deg,var(--c-neon),var(--c-azure));border-radius:3px 3px 0 0;flex:1;transition:.3s;cursor:pointer;position:relative}
+.bar:hover{opacity:.8}
+.bar-label{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-size:9px;font-family:var(--font-mono);color:var(--c-gray);white-space:nowrap}
+.table-wrap{background:var(--c-card);border:1px solid var(--c-border);border-radius:12px;overflow:hidden;margin-bottom:16px}
+table{width:100%;border-collapse:collapse}
+th{padding:10px 16px;font-size:10px;font-family:var(--font-mono);color:var(--c-gray);letter-spacing:2px;text-align:left;border-bottom:1px solid var(--c-border);background:#0A1020}
+td{padding:11px 16px;font-size:12px;border-bottom:1px solid rgba(30,44,74,.5)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(30,111,217,.05)}
+.tag{padding:3px 8px;border-radius:100px;font-size:10px;font-family:var(--font-mono);font-weight:600}
+.tag-green{background:rgba(34,211,170,.1);color:#22D3AA;border:1px solid rgba(34,211,170,.2)}
+.tag-yellow{background:rgba(251,191,36,.1);color:#FBBf24;border:1px solid rgba(251,191,36,.2)}
+.tag-red{background:rgba(248,113,113,.1);color:#F87171;border:1px solid rgba(248,113,113,.2)}
+.tag-blue{background:rgba(59,158,255,.1);color:var(--c-neon);border:1px solid rgba(59,158,255,.2)}
+.three-col{display:grid;grid-template-columns:2fr 1fr 1fr;gap:16px;margin-bottom:16px}
+
+/* === SISTEMA PREMIUM EXECUTIVO === */
+#system-exec{background:var(--c-black);min-height:100vh;flex-direction:row;position:relative}
+.exec-bg{position:fixed;inset:0;pointer-events:none;z-index:0}
+.exec-bg-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(201,168,76,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.02) 1px,transparent 1px);background-size:80px 80px}
+.exec-bg-orb{position:absolute;border-radius:50%;filter:blur(120px)}
+.exec-orb1{width:800px;height:500px;background:rgba(201,168,76,.04);top:-200px;right:-200px}
+.exec-orb2{width:600px;height:400px;background:rgba(30,111,217,.03);bottom:0;left:-100px}
+.exec-sidebar{width:220px;min-height:100vh;background:rgba(5,7,9,.95);border-right:1px solid rgba(201,168,76,.08);position:relative;z-index:10;flex-shrink:0}
+.exec-sb-logo{padding:24px 20px;border-bottom:1px solid rgba(201,168,76,.08)}
+.exec-logo-mark{width:34px;height:34px;background:linear-gradient(135deg,rgba(201,168,76,.2),rgba(232,201,106,.1));border:1px solid rgba(201,168,76,.3);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.exec-logo-diamond{width:12px;height:12px;background:var(--c-gold);transform:rotate(45deg)}
+.exec-sb-user{padding:16px 20px;border-bottom:1px solid rgba(201,168,76,.06)}
+.exec-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,rgba(201,168,76,.3),rgba(201,168,76,.1));border:1px solid rgba(201,168,76,.3);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--c-gold);flex-shrink:0}
+.exec-user-name{font-size:12px;font-weight:700;color:var(--c-gold2)}
+.exec-user-role{font-size:9px;font-family:var(--font-mono);color:var(--c-text2);letter-spacing:2px}
+.exec-nav{flex:1;padding:20px 0;overflow-y:auto}
+.exec-sb-section{font-size:8px;font-family:var(--font-mono);color:rgba(201,168,76,.4);letter-spacing:4px;padding:16px 20px 6px;text-transform:uppercase}
+.exec-sb-item{display:flex;align-items:center;gap:10px;padding:9px 20px;font-size:12px;cursor:pointer;transition:.2s;border-left:1px solid transparent;color:var(--c-text2)}
+.exec-sb-item:hover{color:var(--c-gold2);background:rgba(201,168,76,.03)}
+.exec-sb-item.active{color:var(--c-gold);border-left-color:var(--c-gold);background:rgba(201,168,76,.06)}
+.exec-sb-icon{width:16px;text-align:center;font-size:12px}
+.exec-sb-bottom{padding:16px 20px;border-top:1px solid rgba(201,168,76,.08)}
+.exec-sb-classified{font-size:9px;font-family:var(--font-mono);color:rgba(201,168,76,.3);letter-spacing:2px;text-align:center;border:1px solid rgba(201,168,76,.1);border-radius:4px;padding:6px}
+.exec-main{flex:1;display:flex;flex-direction:column;overflow:hidden;position:relative;z-index:5}
+.exec-topbar{padding:16px 32px;border-bottom:1px solid rgba(201,168,76,.06);display:flex;align-items:center;gap:16px;background:rgba(5,7,9,.8);backdrop-filter:blur(20px)}
+.exec-topbar-title{font-size:14px;font-weight:700;color:var(--c-gold2);letter-spacing:.5px;flex:1}
+.exec-topbar-meta{font-size:10px;font-family:var(--font-mono);color:var(--c-text2)}
+.exec-alert-btn{padding:7px 16px;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.2);border-radius:6px;color:var(--c-gold);font-size:10px;font-family:var(--font-mono);cursor:pointer;letter-spacing:1px}
+.exec-content{flex:1;padding:28px 32px;overflow-y:auto}
+.exec-welcome{margin-bottom:32px}
+.exec-welcome-row{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:4px}
+.exec-welcome-h{font-size:28px;font-weight:700;letter-spacing:-1px;color:var(--c-gold2)}
+.exec-welcome-sub{font-size:12px;font-family:var(--font-mono);color:var(--c-text2);letter-spacing:1px}
+.exec-date{font-size:11px;font-family:var(--font-mono);color:rgba(201,168,76,.5)}
+.exec-kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.exec-kpi{background:rgba(12,10,8,.9);border:1px solid rgba(201,168,76,.1);border-radius:12px;padding:20px;position:relative;overflow:hidden}
+.exec-kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.3),transparent)}
+.exec-kpi-label{font-size:9px;font-family:var(--font-mono);color:var(--c-text2);letter-spacing:3px;margin-bottom:8px;text-transform:uppercase}
+.exec-kpi-val{font-size:28px;font-weight:800;color:var(--c-gold2);letter-spacing:-1px;line-height:1}
+.exec-kpi-sub{font-size:10px;font-family:var(--font-mono);margin-top:8px}
+.exec-kpi-pos{color:#4ADE80}
+.exec-kpi-neg{color:#F87171}
+.exec-kpi-spark{height:32px;display:flex;align-items:flex-end;gap:2px;margin-top:10px}
+.exec-spark-bar{flex:1;border-radius:2px 2px 0 0;background:linear-gradient(180deg,rgba(201,168,76,.5),rgba(201,168,76,.15));transition:.3s}
+.exec-main-grid{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:16px}
+.exec-widget{background:rgba(8,7,5,.95);border:1px solid rgba(201,168,76,.08);border-radius:12px;padding:24px;position:relative;overflow:hidden}
+.exec-widget::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.2),transparent)}
+.exec-widget-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.exec-widget-title{font-size:12px;font-weight:700;color:var(--c-gold2);letter-spacing:1px;text-transform:uppercase}
+.exec-widget-meta{font-size:9px;font-family:var(--font-mono);color:var(--c-text2)}
+.exec-chart-area{height:120px;display:flex;align-items:flex-end;gap:3px}
+.exec-bar{flex:1;border-radius:2px 2px 0 0;position:relative;transition:.3s;cursor:pointer;background:linear-gradient(180deg,rgba(201,168,76,.6),rgba(201,168,76,.15))}
+.exec-bar:hover{background:linear-gradient(180deg,var(--c-gold),rgba(201,168,76,.3))}
+.exec-bar-lbl{position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);font-size:8px;font-family:var(--font-mono);color:var(--c-text2);white-space:nowrap}
+.exec-donut-area{display:flex;align-items:center;justify-content:center;gap:24px;margin-top:8px}
+.exec-legend{flex:1}
+.exec-legend-item{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.exec-legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.exec-legend-label{font-size:11px;color:var(--c-text)}
+.exec-legend-val{margin-left:auto;font-size:11px;font-family:var(--font-mono);color:var(--c-gold2)}
+.exec-risk-row{display:flex;gap:12px;margin-bottom:16px}
+.exec-risk-card{flex:1;background:rgba(8,7,5,.9);border:1px solid rgba(201,168,76,.08);border-radius:10px;padding:16px}
+.exec-risk-title{font-size:10px;font-weight:700;color:var(--c-text);letter-spacing:1px;margin-bottom:8px;text-transform:uppercase}
+.risk-bar-track{height:4px;background:rgba(201,168,76,.1);border-radius:2px;margin-top:4px}
+.risk-bar-fill{height:4px;border-radius:2px}
+.risk-item{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;font-size:11px;color:var(--c-text2)}
+.risk-val{font-family:var(--font-mono);color:var(--c-gold2);font-size:10px}
+.exec-audit-row{display:flex;flex-direction:column;gap:6px}
+.audit-line{display:flex;align-items:center;gap:10px;padding:8px 12px;background:rgba(201,168,76,.03);border:1px solid rgba(201,168,76,.06);border-radius:6px;font-size:11px}
+.audit-time{font-family:var(--font-mono);font-size:9px;color:var(--c-text2);min-width:50px}
+.audit-user{font-size:10px;font-weight:600;color:var(--c-gold2);min-width:70px}
+.audit-action{flex:1;color:var(--c-text);font-size:10px}
+.audit-level{font-size:8px;font-family:var(--font-mono);padding:2px 6px;border-radius:100px}
+.lvl-crit{background:rgba(248,113,113,.1);color:#F87171;border:1px solid rgba(248,113,113,.2)}
+.lvl-warn{background:rgba(251,191,36,.1);color:#FBBf24;border:1px solid rgba(251,191,36,.2)}
+.lvl-info{background:rgba(201,168,76,.1);color:var(--c-gold2);border:1px solid rgba(201,168,76,.2)}
+.exec-intelligence-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px}
+.intel-card{background:rgba(8,7,5,.9);border:1px solid rgba(201,168,76,.08);border-radius:10px;padding:16px;position:relative;overflow:hidden}
+.intel-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.15),transparent)}
+.intel-label{font-size:8px;font-family:var(--font-mono);color:var(--c-text2);letter-spacing:3px;margin-bottom:6px;text-transform:uppercase}
+.intel-val{font-size:22px;font-weight:800;color:var(--c-gold2);letter-spacing:-1px}
+.intel-trend{font-size:10px;font-family:var(--font-mono);margin-top:4px}
+.intel-chart{height:40px;display:flex;align-items:flex-end;gap:2px;margin-top:10px;opacity:.7}
+.intel-mini-bar{flex:1;border-radius:1px 1px 0 0;background:linear-gradient(180deg,var(--c-gold),rgba(201,168,76,.1))}
+
+/* Nav between screens */
+.sys-nav{position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px}
+.sys-nav-btn{padding:8px 14px;border-radius:8px;font-size:10px;font-weight:700;cursor:pointer;letter-spacing:1px;transition:.2s;font-family:var(--font-mono);border:1px solid}
+.sys-nav-land{background:rgba(5,8,15,.9);border-color:rgba(59,158,255,.4);color:var(--c-neon)}
+.sys-nav-op{background:rgba(5,8,15,.9);border-color:rgba(30,111,217,.5);color:var(--c-neon2)}
+.sys-nav-exec{background:rgba(5,7,9,.9);border-color:rgba(201,168,76,.4);color:var(--c-gold)}
+.sys-nav-btn:hover{transform:translateX(-3px)}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(59,158,255,.2);border-radius:2px}
+#system-exec ::-webkit-scrollbar-thumb{background:rgba(201,168,76,.15)}
+
+/* Canvas for charts */
+canvas{display:block}
+.chart-container{width:100%;height:100%}
+
+/* Donut SVG */
+.donut-svg{overflow:visible}
+
+/* Line chart area */
+.linechart{width:100%;height:90px;position:relative}
+
+/* Responsive */
+@media(max-width:768px){
+.kpi-grid,.exec-kpi-grid{grid-template-columns:repeat(2,1fr)}
+.sidebar,.exec-sidebar{width:56px}
+.sb-item span:not(.sb-item-icon),.sb-section,.sb-user-info,.exec-user-role,.exec-user-name{display:none}
+.logo-text,.logo-sub{display:none}
+.exec-logo-mark{margin:0 auto}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== LANDING PAGE ===== -->
+<div id="landing" class="screen active">
+<div class="land-grid"></div>
+<div class="land-orb orb1"></div>
+<div class="land-orb orb2"></div>
+
+<nav class="land-nav">
+  <div class="logo-wrap">
+    <div class="logo-mark">AQ</div>
+    <div>
+      <span class="logo-text">AQUA CORP</span>
+      <small class="logo-sub">BUSINESS INTELLIGENCE CENTER</small>
+    </div>
+  </div>
+  <div class="land-cta-row">
+    <button class="btn btn-outline" onclick="showScreen('login')">ACESSAR SISTEMA</button>
+  </div>
+</nav>
+
+<div class="land-hero">
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="badge-dot"></span> PLATAFORMA CORPORATIVA v4.2 — ATIVO</div>
+    <div class="hero-h1">CENTRO DE<br/><span class="hero-h1-gold">INTELIGÊNCIA</span><br/>EMPRESARIAL</div>
+    <p class="hero-sub">Ecossistema corporativo de alto desempenho para gestão operacional e executiva de manufatura de moda praia. Business Intelligence, Governança, Finanças e Segurança integrados em uma única plataforma.</p>
+    <div class="hero-actions">
+      <button class="btn-hero btn-hero-blue" onclick="showScreen('login')">⚡ ACESSO OPERACIONAL</button>
+      <button class="btn-hero btn-hero-gold" onclick="loginExec()">◆ ACESSO EXECUTIVO</button>
+    </div>
+  </div>
+</div>
+
+<div class="land-stats">
+  <div class="stat-item"><div class="stat-num">R$ 18.4M</div><div class="stat-lbl">RECEITA ANUAL</div></div>
+  <div class="stat-item"><div class="stat-num">12.847</div><div class="stat-lbl">PEDIDOS / MÊS</div></div>
+  <div class="stat-item"><div class="stat-num">340+</div><div class="stat-lbl">COLABORADORES</div></div>
+  <div class="stat-item"><div class="stat-num">99.7%</div><div class="stat-lbl">UPTIME SLA</div></div>
+  <div class="stat-item"><div class="stat-num">3 CANAIS</div><div class="stat-lbl">B2C · B2B · DISTRIB</div></div>
+</div>
+
+<div class="modules-grid">
+  <div class="mod-card"><div class="mod-icon">📦</div><div class="mod-title">Gestão de Pedidos</div><div class="mod-desc">Rastreamento em tempo real, status e workflow completo</div></div>
+  <div class="mod-card"><div class="mod-icon">🏭</div><div class="mod-title">Produção</div><div class="mod-desc">Controle de coleções, corte, costura e acabamento</div></div>
+  <div class="mod-card"><div class="mod-icon">📊</div><div class="mod-title">BI Executivo</div><div class="mod-desc">EBITDA, margens, curva ABC e inteligência financeira</div></div>
+  <div class="mod-card"><div class="mod-icon">🔐</div><div class="mod-title">Segurança & Auditoria</div><div class="mod-desc">RBAC, Zero Trust, logs imutáveis e rastreabilidade</div></div>
+  <div class="mod-card"><div class="mod-icon">💰</div><div class="mod-title">Financeiro</div><div class="mod-desc">Fluxo de caixa, DRE, contas e forecast financeiro</div></div>
+  <div class="mod-card"><div class="mod-icon">🚚</div><div class="mod-title">Expedição</div><div class="mod-desc">Logística, transportadoras e rastreamento de envios</div></div>
+  <div class="mod-card"><div class="mod-icon">👥</div><div class="mod-title">CRM & Influenciadores</div><div class="mod-desc">Gestão de clientes, influencers e campanhas</div></div>
+  <div class="mod-card"><div class="mod-icon">🎯</div><div class="mod-title">Inteligência Comercial</div><div class="mod-desc">Análise B2B/B2C, forecast e performance por canal</div></div>
+</div>
+</div>
+
+<!-- ===== LOGIN ===== -->
+<div id="login" class="screen">
+<div class="login-wrap">
+  <div class="login-logo">
+    <div class="logo-mark" style="width:40px;height:40px;font-size:18px">AQ</div>
+    <div>
+      <div style="font-size:16px;font-weight:700;letter-spacing:2px">AQUA CORP</div>
+      <div style="font-size:9px;font-family:var(--font-mono);color:var(--c-gray);letter-spacing:3px">SISTEMA INTEGRADO</div>
+    </div>
+  </div>
+  <div class="login-title">Autenticação Corporativa</div>
+  <div class="login-sub">AMBIENTE SEGURO · CRIPTOGRAFIA AES-256</div>
+  
+  <div style="margin-bottom:20px">
+    <div style="font-size:10px;font-family:var(--font-mono);color:var(--c-gray);letter-spacing:2px;margin-bottom:8px">NÍVEL DE ACESSO</div>
+    <div class="access-select">
+      <button class="access-btn sel-op" id="btn-op" onclick="setAccess('op')">⚡ OPERACIONAL</button>
+      <button class="access-btn" id="btn-exec" onclick="setAccess('exec')">◆ EXECUTIVO</button>
+    </div>
+  </div>
+
+  <div class="input-group">
+    <label class="input-label">USUÁRIO / E-MAIL CORPORATIVO</label>
+    <input type="text" class="input-field" value="ana.lima@aquacorp.com.br" placeholder="usuario@aquacorp.com.br"/>
+  </div>
+  <div class="input-group">
+    <label class="input-label">SENHA</label>
+    <input type="password" class="input-field" value="••••••••••" placeholder="Senha corporativa"/>
+  </div>
+  
+  <div style="margin-bottom:20px">
+    <div style="font-size:10px;font-family:var(--font-mono);color:var(--c-gray);letter-spacing:2px;margin-bottom:8px">AUTENTICAÇÃO MFA — CÓDIGO DE 6 DÍGITOS</div>
+    <div class="mfa-row">
+      <input class="mfa-digit" maxlength="1" value="4"/>
+      <input class="mfa-digit" maxlength="1" value="8"/>
+      <input class="mfa-digit" maxlength="1" value="2"/>
+      <input class="mfa-digit" maxlength="1" value="•"/>
+      <input class="mfa-digit" maxlength="1" value="•"/>
+      <input class="mfa-digit" maxlength="1" value="•"/>
+    </div>
+  </div>
+  
+  <button class="btn-login" id="btn-login-main" onclick="doLogin()">ACESSAR SISTEMA</button>
+  
+  <div class="sec-badges">
+    <span class="sec-badge" style="border-color:rgba(34,211,170,.3);color:#22D3AA">✓ TLS 1.3</span>
+    <span class="sec-badge" style="border-color:rgba(59,158,255,.3);color:var(--c-neon)">✓ MFA ATIVO</span>
+    <span class="sec-badge" style="border-color:rgba(251,191,36,.3);color:#FBBf24">✓ ZERO TRUST</span>
+    <span class="sec-badge" style="border-color:rgba(201,168,76,.3);color:var(--c-gold)">✓ RBAC</span>
+  </div>
+</div>
+</div>
+
+<!-- ===== SISTEMA OPERACIONAL GERAL ===== -->
+<div id="system-op" class="screen">
+
+<!-- Sidebar -->
+<div class="sidebar">
+  <div class="sb-logo">
+    <div class="logo-mark" style="width:28px;height:28px;font-size:12px">AQ</div>
+    <div>
+      <div style="font-size:12px;font-weight:700;letter-spacing:1px">AQUA CORP</div>
+      <div style="font-size:8px;font-family:var(--font-mono);color:var(--c-gray);letter-spacing:2px">SISTEMA OPERACIONAL</div>
+    </div>
+  </div>
+  <div class="sb-user">
+    <div class="avatar">AL</div>
+    <div class="sb-user-info">
+      <p>Ana Lima</p>
+      <small>GESTORA OPERACIONAL</small>
+    </div>
+  </div>
+  <div class="sb-nav">
+    <div class="sb-section">PRINCIPAL</div>
+    <div class="sb-item active" onclick="setOpPage('dashboard')"><span class="sb-item-icon">⊞</span><span>Dashboard</span></div>
+    <div class="sb-section">COMERCIAL</div>
+    <div class="sb-item" onclick="setOpPage('pedidos')"><span class="sb-item-icon">📦</span><span>Pedidos</span><span class="sb-badge">47</span></div>
+    <div class="sb-item" onclick="setOpPage('crm')"><span class="sb-item-icon">👥</span><span>CRM / Clientes</span></div>
+    <div class="sb-item" onclick="setOpPage('influenciadores')"><span class="sb-item-icon">⭐</span><span>Influenciadores</span></div>
+    <div class="sb-section">OPERAÇÕES</div>
+    <div class="sb-item" onclick="setOpPage('producao')"><span class="sb-item-icon">🏭</span><span>Produção</span></div>
+    <div class="sb-item" onclick="setOpPage('estoque')"><span class="sb-item-icon">📊</span><span>Estoque</span></div>
+    <div class="sb-item" onclick="setOpPage('expedicao')"><span class="sb-item-icon">🚚</span><span>Expedição</span><span class="sb-badge">12</span></div>
+    <div class="sb-item" onclick="setOpPage('trocas')"><span class="sb-item-icon">🔄</span><span>Trocas & Dev.</span><span class="sb-badge" style="background:#F87171">8</span></div>
+    <div class="sb-section">ADMINISTRATIVO</div>
+    <div class="sb-item" onclick="setOpPage('financeiro')"><span class="sb-item-icon">💰</span><span>Financeiro</span></div>
+    <div class="sb-item" onclick="setOpPage('atendimento')"><span class="sb-item-icon">💬</span><span>Atendimento</span></div>
+    <div class="sb-item" onclick="setOpPage('pops')"><span class="sb-item-icon">📋</span><span>POPs</span></div>
+    <div class="sb-item" onclick="setOpPage('tarefas')"><span class="sb-item-icon">✅</span><span>Tarefas</span></div>
+    <div class="sb-section">SISTEMA</div>
+    <div class="sb-item" onclick="setOpPage('logs')"><span class="sb-item-icon">🔍</span><span>Logs & Auditoria</span></div>
+    <div class="sb-item" onclick="setOpPage('permissoes')"><span class="sb-item-icon">🔐</span><span>Permissões</span></div>
+  </div>
+  <div class="sb-bottom">
+    <div style="font-size:9px;font-family:var(--font-mono);color:var(--c-gray);text-align:center;margin-bottom:8px">v4.2.1 · AMBIENTE PRODUÇÃO</div>
+    <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:#22D3AA;font-family:var(--font-mono)"><span style="width:6px;height:6px;background:#22D3AA;border-radius:50%;flex-shrink:0"></span>SISTEMAS ONLINE</div>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div class="op-main">
+  <div class="op-topbar">
+    <div class="op-topbar-title" id="op-page-title">📊 Dashboard Operacional</div>
+    <div class="op-topbar-right">
+      <div style="font-size:11px;font-family:var(--font-mono);color:var(--c-gray)" id="op-date">08/05/2026 · 09:41</div>
+      <button class="notif-btn" title="Notificações">🔔<span class="notif-dot"></span></button>
+      <div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--c-azure),var(--c-neon));display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;cursor:pointer">AL</div>
+    </div>
+  </div>
+  
+  <div class="op-content" id="op-content">
+  <!-- Dashboard content injected by JS -->
+  </div>
+</div>
+</div>
+
+<!-- ===== SISTEMA EXECUTIVO PREMIUM ===== -->
+<div id="system-exec" class="screen">
+<div class="exec-bg">
+  <div class="exec-bg-grid"></div>
+  <div class="exec-bg-orb exec-orb1"></div>
+  <div class="exec-bg-orb exec-orb2"></div>
+</div>
+
+<!-- Exec Sidebar -->
+<div class="exec-sidebar">
+  <div class="exec-sb-logo" style="display:flex;align-items:center;gap:10px">
+    <div class="exec-logo-mark"><div class="exec-logo-diamond"></div></div>
+    <div>
+      <div style="font-size:13px;font-weight:700;color:var(--c-gold2);letter-spacing:1px">AQUA CORP</div>
+      <div style="font-size:8px;font-family:var(--font-mono);color:rgba(201,168,76,.4);letter-spacing:2px">EXECUTIVE SUITE</div>
+    </div>
+  </div>
+  <div class="exec-sb-user" style="display:flex;align-items:center;gap:10px">
+    <div class="exec-avatar">RC</div>
+    <div>
+      <div class="exec-user-name">Ricardo Cunha</div>
+      <div class="exec-user-role">CEO · DIRETOR GERAL</div>
+    </div>
+  </div>
+  <div class="exec-nav">
+    <div class="exec-sb-section">INTELIGÊNCIA</div>
+    <div class="exec-sb-item active"><span class="exec-sb-icon">◈</span><span>Intelligence Hub</span></div>
+    <div class="exec-sb-item"><span class="exec-sb-icon">◎</span><span>Financeiro Executivo</span></div>
+    <div class="exec-sb-item"><span class="exec-sb-icon">◉</span><span>EBITDA & Margens</span></div>
+    <div class="exec-sb-item"><span class="exec-sb-icon">◇</span><span>Fluxo de Caixa</span></div>
+    <div class="exec-sb-section">ESTRATÉGIA</div>
+    <div class="exec-sb-item"><span class="exec-sb-icon">⬡</span><span>Inteligência Comercial</span></div>
+    <div class="exec-sb-item"><span class="exec-sb-icon">⬢</span><span>Curva ABC</span></div>
+    <div class="exec-sb-item"><span class="exec-sb-icon">△</span><span>Forecast & Previsões</span></div>
+    <div class="exec-sb-item"><span class="exec-sb-icon">▲</span><span>Análise de Coleção</span></div>
+    <div class="exec-sb-section">GOVERNANÇA</div>
+    <div class="exec-sb-item"><span class="exec-sb-icon">◻</span><span>Auditoria Corporativa</span></div>
+    <div class="exec-sb-item"><span class="exec-sb-icon">◼</span><span>Gestão de Risco</span></div>
+    <div class="exec-sb-item"><span class="exec-sb-icon">⬛</span><span>Rastreamento de Acesso</span></div>
+    <div class="exec-sb-section">OPERAÇÕES</div>
+    <div class="exec-sb-item"><span class="exec-sb-icon">○</span><span>Performance B2B/B2C</span></div>
+    <div class="exec-sb-item"><span class="exec-sb-icon">●</span><span>Mapas Estratégicos</span></div>
+  </div>
+  <div class="exec-sb-bottom">
+    <div class="exec-sb-classified">◆ ACESSO RESTRITO — NÍVEL EXECUTIVO</div>
+  </div>
+</div>
+
+<!-- Exec Main -->
+<div class="exec-main">
+  <div class="exec-topbar">
+    <div>
+      <div class="exec-topbar-title">INTELLIGENCE HUB — CENTRO DE COMANDO</div>
+      <div class="exec-topbar-meta">SESSÃO AUTENTICADA · MFA VERIFICADO · CANAL CRIPTOGRAFADO</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="exec-topbar-meta" id="exec-date">Sex, 08 Mai 2026 · 09:41</div>
+      <button class="exec-alert-btn">◆ 3 ALERTAS</button>
+      <div class="exec-avatar" style="cursor:pointer">RC</div>
+    </div>
+  </div>
+  
+  <div class="exec-content">
+    <div class="exec-welcome">
+      <div class="exec-welcome-row">
+        <div>
+          <div class="exec-welcome-h">Bom dia, Ricardo.</div>
+          <div class="exec-welcome-sub">INTELIGÊNCIA EMPRESARIAL · VISÃO CONSOLIDADA 360°</div>
+        </div>
+        <div class="exec-date" id="exec-live-clock">— ATUALIZADO AGORA</div>
+      </div>
+    </div>
+
+    <!-- KPIs Executivos -->
+    <div class="exec-kpi-grid">
+      <div class="exec-kpi">
+        <div class="exec-kpi-label">RECEITA MENSAL</div>
+        <div class="exec-kpi-val">R$ 1.84M</div>
+        <div class="exec-kpi-sub exec-kpi-pos">▲ +18.4% vs mai/2025</div>
+        <div class="exec-kpi-spark" id="spark-rev"></div>
+      </div>
+      <div class="exec-kpi">
+        <div class="exec-kpi-label">EBITDA</div>
+        <div class="exec-kpi-val">32.6%</div>
+        <div class="exec-kpi-sub exec-kpi-pos">▲ +2.1 p.p. vs meta</div>
+        <div class="exec-kpi-spark" id="spark-ebitda"></div>
+      </div>
+      <div class="exec-kpi">
+        <div class="exec-kpi-label">MARGEM LÍQUIDA</div>
+        <div class="exec-kpi-val">21.3%</div>
+        <div class="exec-kpi-sub exec-kpi-neg">▼ -0.8 p.p. vs abr</div>
+        <div class="exec-kpi-spark" id="spark-margin"></div>
+      </div>
+      <div class="exec-kpi">
+        <div class="exec-kpi-label">PEDIDOS B2B/B2C</div>
+        <div class="exec-kpi-val">12.847</div>
+        <div class="exec-kpi-sub exec-kpi-pos">▲ +24.7% vs mês ant.</div>
+        <div class="exec-kpi-spark" id="spark-orders"></div>
+      </div>
+    </div>
+
+    <!-- Intelligence Cards -->
+    <div class="exec-intelligence-row">
+      <div class="intel-card">
+        <div class="intel-label">TICKET MÉDIO B2C</div>
+        <div class="intel-val">R$ 287</div>
+        <div class="intel-trend exec-kpi-pos">▲ +12% vs meta</div>
+        <div class="intel-chart" id="ic1"></div>
+      </div>
+      <div class="intel-card">
+        <div class="intel-label">TICKET MÉDIO B2B</div>
+        <div class="intel-val">R$ 4.820</div>
+        <div class="intel-trend exec-kpi-pos">▲ +8% vs meta</div>
+        <div class="intel-chart" id="ic2"></div>
+      </div>
+      <div class="intel-card">
+        <div class="intel-label">GIRO DE ESTOQUE</div>
+        <div class="intel-val">6.2×</div>
+        <div class="intel-trend" style="color:var(--c-text2)">→ Meta: 6.0×</div>
+        <div class="intel-chart" id="ic3"></div>
+      </div>
+      <div class="intel-card">
+        <div class="intel-label">NPS CONSOLIDADO</div>
+        <div class="intel-val">74</div>
+        <div class="intel-trend exec-kpi-pos">▲ Excelente</div>
+        <div class="intel-chart" id="ic4"></div>
+      </div>
+      <div class="intel-card">
+        <div class="intel-label">INADIMPLÊNCIA B2B</div>
+        <div class="intel-val">1.8%</div>
+        <div class="intel-trend exec-kpi-pos">▼ Abaixo da meta</div>
+        <div class="intel-chart" id="ic5"></div>
+      </div>
+      <div class="intel-card">
+        <div class="intel-label">CUSTO PRODUÇÃO/UN</div>
+        <div class="intel-val">R$ 42</div>
+        <div class="intel-trend exec-kpi-neg">▲ +3% vs meta</div>
+        <div class="intel-chart" id="ic6"></div>
+      </div>
+    </div>
+
+    <!-- Main Charts Grid -->
+    <div class="exec-main-grid">
+      <div class="exec-widget">
+        <div class="exec-widget-h">
+          <div>
+            <div class="exec-widget-title">RECEITA MENSAL — EVOLUÇÃO 12M</div>
+            <div class="exec-widget-meta">B2C + B2B + DISTRIBUIDORES · R$ milhares</div>
+          </div>
+          <div style="font-size:9px;font-family:var(--font-mono);color:var(--c-gold);border:1px solid rgba(201,168,76,.2);padding:3px 8px;border-radius:4px">◆ CONFIDENCIAL</div>
+        </div>
+        <div class="exec-chart-area" id="exec-revenue-chart" style="height:140px"></div>
+        <div style="display:flex;gap:8px;margin-top:20px;padding-top:12px;border-top:1px solid rgba(201,168,76,.06)">
+          <span style="font-size:9px;font-family:var(--font-mono);color:var(--c-text2)">■ B2C</span>
+          <span style="font-size:9px;font-family:var(--font-mono);color:rgba(201,168,76,.4)">■ B2B</span>
+          <span style="font-size:9px;font-family:var(--font-mono);color:rgba(201,168,76,.2)">■ DISTRIB</span>
+          <span style="margin-left:auto;font-size:9px;font-family:var(--font-mono);color:var(--c-gold);font-weight:700">YTD: R$ 8.4M ▲ 22%</span>
+        </div>
+      </div>
+      
+      <div class="exec-widget">
+        <div class="exec-widget-h">
+          <div>
+            <div class="exec-widget-title">MIX DE RECEITA</div>
+            <div class="exec-widget-meta">CANAL · MAI/2026</div>
+          </div>
+        </div>
+        <div class="exec-donut-area">
+          <svg width="100" height="100" viewBox="0 0 100 100" class="donut-svg">
+            <circle cx="50" cy="50" r="38" fill="none" stroke="rgba(201,168,76,.08)" stroke-width="14"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="var(--c-gold)" stroke-width="14" stroke-dasharray="90 150" stroke-dashoffset="-8" stroke-linecap="round"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="rgba(201,168,76,.4)" stroke-width="14" stroke-dasharray="56 150" stroke-dashoffset="-102" stroke-linecap="round"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="rgba(201,168,76,.2)" stroke-width="14" stroke-dasharray="30 150" stroke-dashoffset="-162" stroke-linecap="round"/>
+            <text x="50" y="47" text-anchor="middle" fill="var(--c-gold2)" font-size="11" font-weight="700" font-family="'Syne',sans-serif">38%</text>
+            <text x="50" y="59" text-anchor="middle" fill="rgba(201,168,76,.4)" font-size="7" font-family="'DM Mono',monospace">B2C</text>
+          </svg>
+          <div class="exec-legend">
+            <div class="exec-legend-item"><div class="exec-legend-dot" style="background:var(--c-gold)"></div><div class="exec-legend-label">B2C — Direto</div><div class="exec-legend-val">38%</div></div>
+            <div class="exec-legend-item"><div class="exec-legend-dot" style="background:rgba(201,168,76,.4)"></div><div class="exec-legend-label">B2B — Lojistas</div><div class="exec-legend-val">37%</div></div>
+            <div class="exec-legend-item"><div class="exec-legend-dot" style="background:rgba(201,168,76,.2)"></div><div class="exec-legend-label">Distribuidores</div><div class="exec-legend-val">20%</div></div>
+            <div class="exec-legend-item"><div class="exec-legend-dot" style="background:rgba(201,168,76,.08)"></div><div class="exec-legend-label">Influencer Sales</div><div class="exec-legend-val">5%</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Risk + Audit Row -->
+    <div class="exec-risk-row">
+      <div class="exec-risk-card" style="flex:2">
+        <div class="exec-risk-title">◈ MONITORAMENTO DE RISCOS CORPORATIVOS</div>
+        <div style="margin-top:12px">
+          <div class="risk-item"><span>Risco de Liquidez</span><span class="risk-val">BAIXO · 1.2%</span></div>
+          <div class="risk-bar-track"><div class="risk-bar-fill" style="width:12%;background:linear-gradient(90deg,#4ADE80,rgba(74,222,128,.3))"></div></div>
+          <div class="risk-item" style="margin-top:10px"><span>Concentração de Clientes (Top 5)</span><span class="risk-val">MÉDIO · 34%</span></div>
+          <div class="risk-bar-track"><div class="risk-bar-fill" style="width:34%;background:linear-gradient(90deg,#FBBf24,rgba(251,191,36,.3))"></div></div>
+          <div class="risk-item" style="margin-top:10px"><span>Estoques Obsoletos</span><span class="risk-val">BAIXO · 3.1%</span></div>
+          <div class="risk-bar-track"><div class="risk-bar-fill" style="width:8%;background:linear-gradient(90deg,#4ADE80,rgba(74,222,128,.3))"></div></div>
+          <div class="risk-item" style="margin-top:10px"><span>Inadimplência B2B</span><span class="risk-val">BAIXO · 1.8%</span></div>
+          <div class="risk-bar-track"><div class="risk-bar-fill" style="width:10%;background:linear-gradient(90deg,#4ADE80,rgba(74,222,128,.3))"></div></div>
+          <div class="risk-item" style="margin-top:10px"><span>Risco Operacional</span><span class="risk-val">ALTO · 67%</span></div>
+          <div class="risk-bar-track"><div class="risk-bar-fill" style="width:67%;background:linear-gradient(90deg,#F87171,rgba(248,113,113,.3))"></div></div>
+        </div>
+      </div>
+      <div class="exec-risk-card" style="flex:3">
+        <div class="exec-risk-title">◼ LOG DE AUDITORIA EXECUTIVA — TEMPO REAL</div>
+        <div class="exec-audit-row" style="margin-top:12px">
+          <div class="audit-line"><span class="audit-time">09:38</span><span class="audit-user">R.CUNHA</span><span class="audit-action">Acesso ao relatório financeiro Q2-2026 — EBITDA consolidado</span><span class="audit-level lvl-info">INFO</span></div>
+          <div class="audit-line"><span class="audit-time">09:21</span><span class="audit-user">P.SANTOS</span><span class="audit-action">Exportação de base de dados B2B — aprovação solicitada</span><span class="audit-level lvl-warn">WARN</span></div>
+          <div class="audit-line"><span class="audit-time">08:54</span><span class="audit-user">SISTEMA</span><span class="audit-action">Tentativa de acesso não autorizado ao módulo financeiro — BLOQUEADO</span><span class="audit-level lvl-crit">CRÍTICO</span></div>
+          <div class="audit-line"><span class="audit-time">08:31</span><span class="audit-user">M.COSTA</span><span class="audit-action">Aprovação de pedido B2B — Loja Verão Total R$ 48.200</span><span class="audit-level lvl-info">INFO</span></div>
+          <div class="audit-line"><span class="audit-time">07:45</span><span class="audit-user">R.CUNHA</span><span class="audit-action">Login executivo autenticado — MFA verificado · IP: 177.x.x.x</span><span class="audit-level lvl-info">INFO</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Intelligence Row -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div class="exec-widget">
+        <div class="exec-widget-h">
+          <div class="exec-widget-title">CURVA ABC — PRODUTOS</div>
+          <div class="exec-widget-meta">TOP 6 SKUs · RECEITA ACUMULADA</div>
+        </div>
+        <div style="margin-top:4px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+            <div style="font-size:9px;font-family:var(--font-mono);color:var(--c-text2);width:120px">BIQ-COSMIC-P</div>
+            <div style="flex:1;height:4px;background:rgba(201,168,76,.08);border-radius:2px"><div style="width:92%;height:100%;background:var(--c-gold);border-radius:2px"></div></div>
+            <div style="font-size:10px;font-family:var(--font-mono);color:var(--c-gold2);width:40px;text-align:right">92%</div>
+            <div style="font-size:8px;padding:2px 6px;border-radius:4px;background:rgba(201,168,76,.15);color:var(--c-gold);font-family:var(--font-mono)">A</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+            <div style="font-size:9px;font-family:var(--font-mono);color:var(--c-text2);width:120px">BIQ-SOLAR-M</div>
+            <div style="flex:1;height:4px;background:rgba(201,168,76,.08);border-radius:2px"><div style="width:78%;height:100%;background:var(--c-gold);border-radius:2px;opacity:.8"></div></div>
+            <div style="font-size:10px;font-family:var(--font-mono);color:var(--c-gold2);width:40px;text-align:right">78%</div>
+            <div style="font-size:8px;padding:2px 6px;border-radius:4px;background:rgba(201,168,76,.15);color:var(--c-gold);font-family:var(--font-mono)">A</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+            <div style="font-size:9px;font-family:var(--font-mono);color:var(--c-text2);width:120px">BIQ-TROPIC-G</div>
+            <div style="flex:1;height:4px;background:rgba(201,168,76,.08);border-radius:2px"><div style="width:61%;height:100%;background:rgba(201,168,76,.5);border-radius:2px"></div></div>
+            <div style="font-size:10px;font-family:var(--font-mono);color:var(--c-gold2);width:40px;text-align:right">61%</div>
+            <div style="font-size:8px;padding:2px 6px;border-radius:4px;background:rgba(201,168,76,.08);color:rgba(201,168,76,.6);font-family:var(--font-mono)">B</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+            <div style="font-size:9px;font-family:var(--font-mono);color:var(--c-text2);width:120px">BIQ-WAVE-PP</div>
+            <div style="flex:1;height:4px;background:rgba(201,168,76,.08);border-radius:2px"><div style="width:44%;height:100%;background:rgba(201,168,76,.4);border-radius:2px"></div></div>
+            <div style="font-size:10px;font-family:var(--font-mono);color:var(--c-gold2);width:40px;text-align:right">44%</div>
+            <div style="font-size:8px;padding:2px 6px;border-radius:4px;background:rgba(201,168,76,.08);color:rgba(201,168,76,.6);font-family:var(--font-mono)">B</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+            <div style="font-size:9px;font-family:var(--font-mono);color:var(--c-text2);width:120px">BIQ-RIO-GG</div>
+            <div style="flex:1;height:4px;background:rgba(201,168,76,.08);border-radius:2px"><div style="width:22%;height:100%;background:rgba(201,168,76,.2);border-radius:2px"></div></div>
+            <div style="font-size:10px;font-family:var(--font-mono);color:var(--c-gold2);width:40px;text-align:right">22%</div>
+            <div style="font-size:8px;padding:2px 6px;border-radius:4px;background:rgba(201,168,76,.04);color:rgba(201,168,76,.3);font-family:var(--font-mono)">C</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div style="font-size:9px;font-family:var(--font-mono);color:var(--c-text2);width:120px">BIQ-CORAL-M</div>
+            <div style="flex:1;height:4px;background:rgba(201,168,76,.08);border-radius:2px"><div style="width:11%;height:100%;background:rgba(201,168,76,.15);border-radius:2px"></div></div>
+            <div style="font-size:10px;font-family:var(--font-mono);color:var(--c-gold2);width:40px;text-align:right">11%</div>
+            <div style="font-size:8px;padding:2px 6px;border-radius:4px;background:rgba(201,168,76,.04);color:rgba(201,168,76,.3);font-family:var(--font-mono)">C</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="exec-widget">
+        <div class="exec-widget-h">
+          <div class="exec-widget-title">ALERTAS EXECUTIVOS</div>
+          <div class="exec-widget-meta">PRIORIDADE ALTA · AÇÃO NECESSÁRIA</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">
+          <div style="padding:12px;background:rgba(248,113,113,.05);border:1px solid rgba(248,113,113,.15);border-radius:8px;border-left:2px solid #F87171">
+            <div style="font-size:10px;font-weight:700;color:#F87171;margin-bottom:4px;font-family:var(--font-mono)">⚠ CRÍTICO — SEGURANÇA</div>
+            <div style="font-size:11px;color:var(--c-text)">Tentativa de acesso não autorizado detectada ao módulo financeiro às 08:54</div>
+          </div>
+          <div style="padding:12px;background:rgba(251,191,36,.04);border:1px solid rgba(251,191,36,.15);border-radius:8px;border-left:2px solid #FBBf24">
+            <div style="font-size:10px;font-weight:700;color:#FBBf24;margin-bottom:4px;font-family:var(--font-mono)">▲ ATENÇÃO — ESTOQUE</div>
+            <div style="font-size:11px;color:var(--c-text)">BIQ-COSMIC-P com estoque abaixo do ponto de reposição — 142 unidades restantes</div>
+          </div>
+          <div style="padding:12px;background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.1);border-radius:8px;border-left:2px solid rgba(201,168,76,.4)">
+            <div style="font-size:10px;font-weight:700;color:var(--c-gold);margin-bottom:4px;font-family:var(--font-mono)">◆ INFO — OPORTUNIDADE</div>
+            <div style="font-size:11px;color:var(--c-text)">3 distribuidores novos em análise. Volume potencial: R$ 280K/mês. Aprovação pendente.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- Navigation Buttons (Floating) -->
+<div class="sys-nav">
+  <button class="sys-nav-btn sys-nav-land" onclick="showScreen('landing')">⊞ LANDING</button>
+  <button class="sys-nav-btn sys-nav-op" onclick="showScreen('system-op')">⚡ OPERACIONAL</button>
+  <button class="sys-nav-btn sys-nav-exec" onclick="showScreen('system-exec')">◆ EXECUTIVO</button>
+</div>
+
+<script>
+// State
+let currentAccess = 'op';
+let currentOpPage = 'dashboard';
+
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function setAccess(t){
+  currentAccess = t;
+  document.getElementById('btn-op').className = 'access-btn' + (t==='op' ? ' sel-op' : '');
+  document.getElementById('btn-exec').className = 'access-btn' + (t==='exec' ? ' sel-exec' : '');
+  const lb = document.getElementById('btn-login-main');
+  lb.style.background = t==='exec' ? 'rgba(201,168,76,.15)' : 'var(--c-azure)';
+  lb.style.borderColor = t==='exec' ? 'var(--c-gold)' : 'var(--c-neon)';
+  lb.style.color = t==='exec' ? 'var(--c-gold2)' : '#fff';
+  lb.textContent = t==='exec' ? '◆ ACESSAR EXECUTIVE SUITE' : 'ACESSAR SISTEMA';
+}
+
+function doLogin(){
+  if(currentAccess==='exec') showScreen('system-exec');
+  else showScreen('system-op');
+}
+
+function loginExec(){
+  showScreen('login');
+  setAccess('exec');
+}
+
+// Operational Pages
+const opPages = {
+  dashboard: {
+    title: '⊞ Dashboard Operacional',
+    content: buildDashboard
+  },
+  pedidos: {title:'📦 Gestão de Pedidos', content: buildPedidos},
+  producao: {title:'🏭 Produção', content: buildProducao},
+  estoque: {title:'📊 Estoque', content: buildEstoque},
+  crm: {title:'👥 CRM & Clientes', content: buildCRM},
+  financeiro: {title:'💰 Financeiro Operacional', content: buildFinanceiro},
+  influenciadores: {title:'⭐ Influenciadores', content: buildInfluenciadores},
+  expedicao: {title:'🚚 Expedição', content: buildExpedicao},
+  trocas: {title:'🔄 Trocas & Devoluções', content: buildTrocas},
+  atendimento: {title:'💬 Central de Atendimento', content: buildAtendimento},
+  pops: {title:'📋 POPs — Procedimentos', content: buildPOPs},
+  tarefas: {title:'✅ Tarefas', content: buildTarefas},
+  logs: {title:'🔍 Logs & Auditoria', content: buildLogs},
+  permissoes: {title:'🔐 Controle de Permissões', content: buildPermissoes}
+};
+
+function setOpPage(page){
+  currentOpPage = page;
+  const p = opPages[page];
+  if(!p) return;
+  document.getElementById('op-page-title').textContent = p.title;
+  document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('active'));
+  event && event.currentTarget && event.currentTarget.classList && event.currentTarget.classList.add('active');
+  const content = document.getElementById('op-content');
+  content.innerHTML = p.content();
+  renderOpCharts(page);
+}
+
+function buildDashboard(){
+  return `
+  <div class="page-header">
+    <div><div class="page-title">Dashboard Operacional</div><div class="page-sub">VISÃO GERAL · ATUALIZADO EM TEMPO REAL · ${new Date().toLocaleDateString('pt-BR')}</div></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-outline" style="font-size:11px;padding:8px 16px">↓ EXPORTAR</button>
+      <button class="btn btn-primary" style="font-size:11px;padding:8px 16px">⟳ ATUALIZAR</button>
+    </div>
+  </div>
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="kpi-label">PEDIDOS HOJE</div><div class="kpi-val" style="color:var(--c-neon)">847</div><div class="kpi-change kpi-pos">▲ +12% vs ontem</div></div>
+    <div class="kpi-card"><div class="kpi-label">RECEITA DIÁRIA</div><div class="kpi-val" style="color:#22D3AA">R$ 58.4K</div><div class="kpi-change kpi-pos">▲ +8.3% vs meta</div></div>
+    <div class="kpi-card"><div class="kpi-label">EM PRODUÇÃO</div><div class="kpi-val">3.240</div><div class="kpi-change" style="color:var(--c-gray)">→ 2.340 unid. previstas</div></div>
+    <div class="kpi-card"><div class="kpi-label">TROCAS ABERTAS</div><div class="kpi-val" style="color:#F87171">8</div><div class="kpi-change kpi-neg">▲ +2 vs ontem</div></div>
+  </div>
+  <div class="two-col">
+    <div class="widget">
+      <div class="widget-h"><div class="widget-title">Pedidos por Canal — Últimos 7 dias</div></div>
+      <div class="chart-bar-row" id="op-bar-chart"></div>
+      <div style="display:flex;gap:3px;margin-top:22px" id="op-bar-labels"></div>
+    </div>
+    <div class="widget">
+      <div class="widget-h"><div class="widget-title">Status de Produção</div><div class="widget-sub">COLEÇÃO VERÃO 2026</div></div>
+      ${buildProdStatus()}
+    </div>
+  </div>
+  <div class="table-wrap">
+    <div style="padding:14px 16px 12px;border-bottom:1px solid var(--c-border);display:flex;align-items:center;justify-content:space-between">
+      <span style="font-size:13px;font-weight:700">Últimos Pedidos</span>
+      <span style="font-size:10px;font-family:var(--font-mono);color:var(--c-gray)">MOSTRANDO 8 DE 847</span>
+    </div>
+    <table>
+      <tr><th>#PEDIDO</th><th>CLIENTE</th><th>CANAL</th><th>VALOR</th><th>STATUS</th><th>DATA</th></tr>
+      ${[
+        ['#PED-48291','Verão Total Ltda','B2B','R$ 4.820','Em produção','08/05/26'],
+        ['#PED-48290','@julia_praia','B2C','R$ 287','Enviado','08/05/26'],
+        ['#PED-48289','Maria Santos','B2C','R$ 412','Pago','07/05/26'],
+        ['#PED-48288','Surf Store RJ','B2B','R$ 7.340','Aprovado','07/05/26'],
+        ['#PED-48287','Carol Modas SP','B2B','R$ 2.180','Entregue','07/05/26'],
+        ['#PED-48286','Ana Fernandes','B2C','R$ 194','Enviado','06/05/26'],
+        ['#PED-48285','Beach Club ES','B2B','R$ 12.800','Em análise','06/05/26'],
+        ['#PED-48284','@tati_biquini','B2C','R$ 350','Entregue','05/05/26'],
+      ].map(r=>`<tr><td style="font-family:var(--font-mono);color:var(--c-neon);font-size:11px">${r[0]}</td><td>${r[1]}</td><td><span class="tag ${r[2]==='B2B'?'tag-blue':'tag-green'}">${r[2]}</span></td><td style="font-weight:700">${r[3]}</td><td><span class="tag ${r[4]==='Entregue'?'tag-green':r[4]==='Enviado'?'tag-blue':r[4]==='Em produção'?'tag-yellow':'tag-yellow'}">${r[4]}</span></td><td style="font-family:var(--font-mono);font-size:11px;color:var(--c-gray)">${r[5]}</td></tr>`).join('')}
+    </table>
+  </div>`;
+}
+
+function buildProdStatus(){
+  const items = [
+    ['Corte e Molde','78%','var(--c-neon)'],
+    ['Costura','54%','#22D3AA'],
+    ['Acabamento','32%','#FBBf24'],
+    ['Qualidade','18%','#F87171'],
+    ['Embalagem','8%','var(--c-gray)'],
+  ];
+  return items.map(([l,p,c])=>`
+    <div style="margin-bottom:12px">
+      <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px">
+        <span style="color:var(--c-gray)">${l}</span>
+        <span style="font-family:var(--font-mono);color:${c}">${p}</span>
+      </div>
+      <div style="height:4px;background:rgba(255,255,255,.06);border-radius:2px">
+        <div style="width:${p};height:4px;background:${c};border-radius:2px;transition:.5s"></div>
+      </div>
+    </div>`).join('');
+}
+
+function buildPedidos(){
+  return `
+  <div class="page-header">
+    <div><div class="page-title">Gestão de Pedidos</div><div class="page-sub">PIPELINE COMPLETO · TODOS OS CANAIS</div></div>
+    <button class="btn btn-primary" style="font-size:11px;padding:8px 16px">+ NOVO PEDIDO</button>
+  </div>
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="kpi-label">TOTAL ABERTOS</div><div class="kpi-val" style="color:var(--c-neon)">47</div></div>
+    <div class="kpi-card"><div class="kpi-label">EM PRODUÇÃO</div><div class="kpi-val">23</div></div>
+    <div class="kpi-card"><div class="kpi-label">AGUARDANDO ENV.</div><div class="kpi-val" style="color:#FBBf24">12</div></div>
+    <div class="kpi-card"><div class="kpi-label">VALOR PIPELINE</div><div class="kpi-val" style="color:#22D3AA">R$284K</div></div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <tr><th>#PEDIDO</th><th>CLIENTE</th><th>CANAL</th><th>ITENS</th><th>VALOR</th><th>STATUS</th><th>PRAZO</th><th>AÇÕES</th></tr>
+      ${[
+        ['#48291','Verão Total Ltda','B2B','48 un.','R$ 4.820','Em produção','12/05'],
+        ['#48289','Maria Santos','B2C','3 un.','R$ 412','Pago','10/05'],
+        ['#48288','Surf Store RJ','B2B','72 un.','R$ 7.340','Aprovado','15/05'],
+        ['#48285','Beach Club ES','B2B','120 un.','R$ 12.800','Em análise','18/05'],
+        ['#48283','Fernanda Lima','B2C','2 un.','R$ 238','Em produção','09/05'],
+        ['#48281','Sol & Mar Ltda','B2B','36 un.','R$ 3.960','Aguard. pagto','14/05'],
+      ].map(r=>`<tr>
+        <td style="font-family:var(--font-mono);color:var(--c-neon);font-size:11px">${r[0]}</td>
+        <td style="font-size:12px">${r[1]}</td>
+        <td><span class="tag ${r[2]==='B2B'?'tag-blue':'tag-green'}">${r[2]}</span></td>
+        <td style="font-family:var(--font-mono);font-size:11px">${r[3]}</td>
+        <td style="font-weight:700">${r[4]}</td>
+        <td><span class="tag ${r[5]==='Aprovado'||r[5]==='Pago'?'tag-green':r[5]==='Em produção'?'tag-yellow':'tag-blue'}">${r[5]}</span></td>
+        <td style="font-family:var(--font-mono);font-size:11px;color:var(--c-gray)">${r[6]}</td>
+        <td style="display:flex;gap:4px"><button style="padding:3px 8px;border-radius:4px;background:rgba(59,158,255,.1);border:1px solid rgba(59,158,255,.2);color:var(--c-neon);font-size:10px;cursor:pointer">Ver</button><button style="padding:3px 8px;border-radius:4px;background:transparent;border:1px solid var(--c-border);color:var(--c-gray);font-size:10px;cursor:pointer">Editar</button></td>
+      </tr>`).join('')}
+    </table>
+  </div>`;
+}
+
+function buildProducao(){
+  return `
+  <div class="page-header">
+    <div><div class="page-title">Controle de Produção</div><div class="page-sub">COLEÇÃO VERÃO 2026 · ANDAMENTO GERAL</div></div>
+  </div>
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="kpi-label">EM PROCESSO</div><div class="kpi-val">3.240 un.</div></div>
+    <div class="kpi-card"><div class="kpi-label">META MENSAL</div><div class="kpi-val" style="color:#22D3AA">18.000 un.</div></div>
+    <div class="kpi-card"><div class="kpi-label">EFICIÊNCIA LINHA</div><div class="kpi-val" style="color:var(--c-neon)">91.4%</div></div>
+    <div class="kpi-card"><div class="kpi-label">REJEIÇÃO QA</div><div class="kpi-val" style="color:#FBBf24">2.1%</div></div>
+  </div>
+  <div class="two-col">
+    <div class="widget">
+      <div class="widget-h"><div class="widget-title">Fluxo de Produção por Setor</div></div>
+      ${['Corte','Costura','Elásticos','Acabamento','Qualidade','Embalagem'].map((s,i)=>{
+        const vals = [840,720,680,540,420,340];
+        const pct = Math.round(vals[i]/840*100);
+        return `<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+          <div style="width:80px;font-size:11px;color:var(--c-gray)">${s}</div>
+          <div style="flex:1;height:20px;background:rgba(255,255,255,.04);border-radius:4px;overflow:hidden">
+            <div style="width:${pct}%;height:100%;background:linear-gradient(90deg,var(--c-azure),var(--c-neon));display:flex;align-items:center;padding-left:8px;font-size:10px;font-family:var(--font-mono);color:#fff;white-space:nowrap">${vals[i]} un.</div>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+    <div class="widget">
+      <div class="widget-h"><div class="widget-title">Ordens de Produção Ativas</div></div>
+      ${[
+        ['OP-2026-0184','Biquíni Cosmic P','Costura','480 un.','67%'],
+        ['OP-2026-0183','Biquíni Solar M','Acabamento','360 un.','82%'],
+        ['OP-2026-0182','Biquíni Tropic G','Corte','240 un.','23%'],
+        ['OP-2026-0181','Suíte Wave PP','Embalagem','120 un.','94%'],
+      ].map(([op,prod,fase,qtd,pct])=>`
+        <div style="padding:10px 0;border-bottom:1px solid rgba(30,44,74,.4)">
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+            <span style="font-size:11px;font-family:var(--font-mono);color:var(--c-neon)">${op}</span>
+            <span style="font-size:10px;color:var(--c-gray)">${fase}</span>
+          </div>
+          <div style="font-size:12px;font-weight:600;margin-bottom:4px">${prod} · <span style="color:var(--c-gray);font-weight:400">${qtd}</span></div>
+          <div style="height:3px;background:rgba(255,255,255,.06);border-radius:2px"><div style="width:${pct};height:3px;background:var(--c-neon);border-radius:2px"></div></div>
+        </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+function buildEstoque(){
+  return `
+  <div class="page-header">
+    <div><div class="page-title">Gestão de Estoque</div><div class="page-sub">INVENTÁRIO ATUAL · PONTO DE REPOSIÇÃO</div></div>
+    <button class="btn btn-primary" style="font-size:11px;padding:8px 16px">+ ENTRADA</button>
+  </div>
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="kpi-label">TOTAL PRODUTOS</div><div class="kpi-val">48.320 un.</div></div>
+    <div class="kpi-card"><div class="kpi-label">VALOR ESTOQUE</div><div class="kpi-val" style="color:var(--c-neon)">R$ 2.03M</div></div>
+    <div class="kpi-card"><div class="kpi-label">ALERTAS REPOSIÇÃO</div><div class="kpi-val" style="color:#F87171">4 SKUs</div></div>
+    <div class="kpi-card"><div class="kpi-label">GIRO MÉDIO</div><div class="kpi-val" style="color:#22D3AA">6.2×/ano</div></div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <tr><th>SKU</th><th>PRODUTO</th><th>TAMANHO</th><th>DISPONÍVEL</th><th>RESERVADO</th><th>PONTO REPO.</th><th>STATUS</th></tr>
+      ${[
+        ['BIQ-COSMIC-P','Biquíni Cosmic','PP','142','84','200','⚠ Repor'],
+        ['BIQ-SOLAR-M','Biquíni Solar','M','1.840','320','500','OK'],
+        ['BIQ-SOLAR-G','Biquíni Solar','G','2.210','180','500','OK'],
+        ['BIQ-TROPIC-PP','Biquíni Tropic','PP','320','120','300','OK'],
+        ['BIQ-WAVE-P','Biquíni Wave','P','84','48','150','⚠ Repor'],
+        ['CALC-RIO-M','Calcinha Rio','M','3.420','840','1000','OK'],
+        ['TOP-CORAL-G','Top Coral','G','76','32','150','⚠ Repor'],
+      ].map(([sku,n,t,d,r,p,s])=>`<tr>
+        <td style="font-family:var(--font-mono);font-size:10px;color:var(--c-gray)">${sku}</td>
+        <td style="font-size:12px">${n}</td>
+        <td style="text-align:center">${t}</td>
+        <td style="font-weight:700;font-family:var(--font-mono)">${d}</td>
+        <td style="font-family:var(--font-mono);color:var(--c-gray)">${r}</td>
+        <td style="font-family:var(--font-mono);color:var(--c-gray)">${p}</td>
+        <td><span class="tag ${s.includes('Repor')?'tag-red':'tag-green'}">${s}</span></td>
+      </tr>`).join('')}
+    </table>
+  </div>`;
+}
+
+function buildCRM(){
+  return `
+  <div class="page-header"><div><div class="page-title">CRM & Clientes</div><div class="page-sub">CARTEIRA ATIVA · B2C E B2B</div></div></div>
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="kpi-label">CLIENTES B2C</div><div class="kpi-val">24.820</div></div>
+    <div class="kpi-card"><div class="kpi-label">CLIENTES B2B</div><div class="kpi-val" style="color:var(--c-neon)">342</div></div>
+    <div class="kpi-card"><div class="kpi-label">LTV MÉDIO B2C</div><div class="kpi-val" style="color:#22D3AA">R$ 1.240</div></div>
+    <div class="kpi-card"><div class="kpi-label">CHURN MÊS</div><div class="kpi-val" style="color:#F87171">2.1%</div></div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <tr><th>CLIENTE</th><th>TIPO</th><th>CIDADE</th><th>LTV</th><th>ÚLTIMO PEDIDO</th><th>TICKET MÉD.</th><th>SCORE</th></tr>
+      ${[
+        ['Verão Total Ltda','B2B','São Paulo','R$ 284K','08/05/26','R$ 4.820','AAA'],
+        ['Beach Club ES','B2B','Vitória','R$ 142K','06/05/26','R$ 12.800','AA'],
+        ['Surf Store RJ','B2B','Rio de Janeiro','R$ 98K','07/05/26','R$ 7.340','AA'],
+        ['Maria Santos','B2C','Salvador','R$ 4.840','07/05/26','R$ 412','A'],
+        ['Carol Modas SP','B2B','São Paulo','R$ 76K','07/05/26','R$ 2.180','AA'],
+        ['Ana Fernandes','B2C','Florianópolis','R$ 2.180','06/05/26','R$ 194','B'],
+      ].map(([n,t,c,ltv,ult,tick,sc])=>`<tr>
+        <td style="font-weight:600">${n}</td>
+        <td><span class="tag ${t==='B2B'?'tag-blue':'tag-green'}">${t}</span></td>
+        <td style="font-size:11px;color:var(--c-gray)">${c}</td>
+        <td style="font-weight:700;color:#22D3AA">${ltv}</td>
+        <td style="font-family:var(--font-mono);font-size:11px;color:var(--c-gray)">${ult}</td>
+        <td>${tick}</td>
+        <td><span class="tag ${sc==='AAA'?'tag-blue':sc==='AA'?'tag-green':sc==='A'?'tag-yellow':'tag-red'}">${sc}</span></td>
+      </tr>`).join('')}
+    </table>
+  </div>`;
+}
+
+function buildFinanceiro(){
+  return `
+  <div class="page-header"><div><div class="page-title">Financeiro Operacional</div><div class="page-sub">DRE SIMPLIFICADO · FLUXO DE CAIXA · MAI/2026</div></div></div>
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="kpi-label">RECEITA BRUTA</div><div class="kpi-val" style="color:#22D3AA">R$ 1.84M</div><div class="kpi-change kpi-pos">▲ +18.4%</div></div>
+    <div class="kpi-card"><div class="kpi-label">DEDUÇÕES</div><div class="kpi-val" style="color:#F87171">R$ 184K</div><div class="kpi-change" style="color:var(--c-gray)">10% da receita</div></div>
+    <div class="kpi-card"><div class="kpi-label">RECEITA LÍQUIDA</div><div class="kpi-val" style="color:var(--c-neon)">R$ 1.66M</div></div>
+    <div class="kpi-card"><div class="kpi-label">LUCRO LÍQUIDO</div><div class="kpi-val">R$ 353K</div><div class="kpi-change kpi-pos">Margem 21.3%</div></div>
+  </div>
+  <div class="two-col">
+    <div class="widget">
+      <div class="widget-h"><div class="widget-title">Contas a Receber</div></div>
+      ${[['0-30 dias','R$ 420K','62%'],['31-60 dias','R$ 180K','26%'],['61-90 dias','R$ 68K','10%'],['90+ dias (venc.)','R$ 14K','2%']].map(([p,v,pct])=>`
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+          <span style="font-size:11px;color:var(--c-gray)">${p}</span>
+          <span style="font-family:var(--font-mono);font-size:12px;font-weight:700">${v}</span>
+          <div style="width:60px;height:4px;background:rgba(255,255,255,.06);border-radius:2px"><div style="width:${pct};height:4px;background:var(--c-azure);border-radius:2px"></div></div>
+        </div>`).join('')}
+    </div>
+    <div class="widget">
+      <div class="widget-h"><div class="widget-title">Contas a Pagar</div></div>
+      ${[['Fornecedores','R$ 284K'],['Folha de Pagamento','R$ 180K'],['Impostos','R$ 142K'],['Logística','R$ 68K'],['Marketing','R$ 34K']].map(([d,v])=>`
+        <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(30,44,74,.3)">
+          <span style="font-size:12px">${d}</span>
+          <span style="font-family:var(--font-mono);font-size:12px;font-weight:700;color:#F87171">${v}</span>
+        </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+function buildInfluenciadores(){
+  return `
+  <div class="page-header"><div><div class="page-title">Influenciadores</div><div class="page-sub">GESTÃO DE PARCERIAS E CAMPANHAS</div></div>
+    <button class="btn btn-primary" style="font-size:11px;padding:8px 16px">+ NOVO INFLUENCER</button>
+  </div>
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="kpi-label">INFLUENCERS ATIVOS</div><div class="kpi-val">84</div></div>
+    <div class="kpi-card"><div class="kpi-label">ALCANCE TOTAL</div><div class="kpi-val" style="color:var(--c-neon)">12.4M</div></div>
+    <div class="kpi-card"><div class="kpi-label">RECEITA GERADA</div><div class="kpi-val" style="color:#22D3AA">R$ 92K</div><div class="kpi-change" style="color:var(--c-gray)">5% total</div></div>
+    <div class="kpi-card"><div class="kpi-label">TAXA CONVERSÃO</div><div class="kpi-val">4.8%</div></div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <tr><th>INFLUENCER</th><th>SEGUIDORES</th><th>ENGAJ.</th><th>COMISSÃO</th><th>VENDAS MÊS</th><th>RECEITA</th><th>STATUS</th></tr>
+      ${[
+        ['@bianca_praia','2.4M','6.2%','12%','284','R$ 81K','Ativo'],
+        ['@sol_mare','840K','8.4%','10%','148','R$ 42K','Ativo'],
+        ['@julia_biquini','420K','11.2%','10%','98','R$ 28K','Ativo'],
+        ['@carol_verão','180K','14.8%','8%','54','R$ 15K','Ativo'],
+        ['@tati_praia','96K','18.4%','8%','32','R$ 9K','Pausado'],
+      ].map(([n,s,e,c,v,r,st])=>`<tr>
+        <td style="color:var(--c-neon);font-weight:600">${n}</td>
+        <td style="font-family:var(--font-mono);font-size:11px">${s}</td>
+        <td style="font-family:var(--font-mono);font-size:11px;color:#22D3AA">${e}</td>
+        <td style="font-family:var(--font-mono);font-size:11px">${c}</td>
+        <td style="font-family:var(--font-mono)">${v}</td>
+        <td style="font-weight:700;color:#22D3AA">${r}</td>
+        <td><span class="tag ${st==='Ativo'?'tag-green':'tag-yellow'}">${st}</span></td>
+      </tr>`).join('')}
+    </table>
+  </div>`;
+}
+
+function buildExpedicao(){
+  return `
+  <div class="page-header"><div><div class="page-title">Expedição & Logística</div><div class="page-sub">12 ENVIOS PENDENTES · RASTREAMENTO</div></div></div>
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="kpi-label">AGUARD. DESPACHO</div><div class="kpi-val" style="color:#FBBf24">12</div></div>
+    <div class="kpi-card"><div class="kpi-label">EM TRÂNSITO</div><div class="kpi-val" style="color:var(--c-neon)">284</div></div>
+    <div class="kpi-card"><div class="kpi-label">ENTREGUES HOJE</div><div class="kpi-val" style="color:#22D3AA">48</div></div>
+    <div class="kpi-card"><div class="kpi-label">PRAZO MÉDIO</div><div class="kpi-val">3.2 dias</div></div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <tr><th>RASTREIO</th><th>PEDIDO</th><th>DESTINATÁRIO</th><th>TRANSPORTADORA</th><th>PREVISÃO</th><th>STATUS</th></tr>
+      ${[
+        ['BR48291024','#PED-48290','Maria Santos / SP','Correios PAC','10/05/26','Em trânsito'],
+        ['JD92847123','#PED-48288','Surf Store RJ','Jadlog','11/05/26','Coletado'],
+        ['BR48112034','#PED-48286','Ana Fernandes / SC','Correios SEDEX','09/05/26','Saiu p/ entrega'],
+        ['TT38291842','#PED-48283','Fernanda Lima / RJ','Total Express','09/05/26','Em trânsito'],
+        ['BR48001122','#PED-48280','João Silva / BA','Correios PAC','13/05/26','Aguard. despacho'],
+      ].map(([r,p,d,t,prev,st])=>`<tr>
+        <td style="font-family:var(--font-mono);font-size:10px;color:var(--c-neon)">${r}</td>
+        <td style="font-size:11px">${p}</td>
+        <td style="font-size:11px">${d}</td>
+        <td style="font-size:11px;color:var(--c-gray)">${t}</td>
+        <td style="font-family:var(--font-mono);font-size:11px">${prev}</td>
+        <td><span class="tag ${st.includes('entrega')?'tag-green':st.includes('trânsito')||st.includes('Coletado')?'tag-blue':'tag-yellow'}">${st}</span></td>
+      </tr>`).join('')}
+    </table>
+  </div>`;
+}
+
+function buildTrocas(){
+  return `
+  <div class="page-header"><div><div class="page-title">Trocas & Devoluções</div><div class="page-sub">8 ABERTAS · PRAZO MÁXIMO 30 DIAS</div></div></div>
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="kpi-label">SOLICITAÇÕES ABERTAS</div><div class="kpi-val" style="color:#F87171">8</div></div>
+    <div class="kpi-card"><div class="kpi-label">EM ANÁLISE</div><div class="kpi-val" style="color:#FBBf24">3</div></div>
+    <div class="kpi-card"><div class="kpi-label">RESOLVIDAS MÊS</div><div class="kpi-val" style="color:#22D3AA">24</div></div>
+    <div class="kpi-card"><div class="kpi-label">TAXA TROCA</div><div class="kpi-val">1.9%</div></div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <tr><th>#SOLICITAÇÃO</th><th>CLIENTE</th><th>PRODUTO</th><th>MOTIVO</th><th>DIAS ABERTO</th><th>STATUS</th></tr>
+      ${[
+        ['TRO-0284','Maria Souza','Biquíni Solar M','Tamanho errado','2','Troca aprovada'],
+        ['TRO-0283','Julia Fernandes','Biquíni Cosmic P','Defeito costuras','5','Em análise'],
+        ['TRO-0282','Carla Lima','Top Wave G','Cor diferente','1','Aguardando produto'],
+        ['TRO-0281','Ana Santos','Biquíni Tropic PP','Tamanho errado','8','Em análise'],
+        ['TRO-0280','Praia Store RJ','Lote 36 un. M','Produtos danificados','12','Em análise'],
+      ].map(([id,c,p,m,d,st])=>`<tr>
+        <td style="font-family:var(--font-mono);font-size:11px;color:#F87171">${id}</td>
+        <td>${c}</td>
+        <td style="font-size:11px">${p}</td>
+        <td style="font-size:11px;color:var(--c-gray)">${m}</td>
+        <td style="font-family:var(--font-mono);color:${+d>7?'#F87171':+d>3?'#FBBf24':'#22D3AA'}">${d}d</td>
+        <td><span class="tag ${st.includes('aprovada')?'tag-green':st.includes('análise')?'tag-yellow':'tag-blue'}">${st}</span></td>
+      </tr>`).join('')}
+    </table>
+  </div>`;
+}
+
+function buildAtendimento(){
+  return `
+  <div class="page-header"><div><div class="page-title">Central de Atendimento</div><div class="page-sub">OMNICHANNEL · WHATSAPP · E-MAIL · CHAT</div></div></div>
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="kpi-label">ABERTOS</div><div class="kpi-val" style="color:#FBBf24">34</div></div>
+    <div class="kpi-card"><div class="kpi-label">TMA</div><div class="kpi-val" style="color:var(--c-neon)">4h 12m</div></div>
+    <div class="kpi-card"><div class="kpi-label">RESOLVIDOS HOJE</div><div class="kpi-val" style="color:#22D3AA">127</div></div>
+    <div class="kpi-card"><div class="kpi-label">CSAT</div><div class="kpi-val">4.7 ★</div></div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <tr><th>#TICKET</th><th>CLIENTE</th><th>CANAL</th><th>ASSUNTO</th><th>ATENDENTE</th><th>PRIORIDADE</th><th>STATUS</th></tr>
+      ${[
+        ['ATD-2847','Ana Lima','WhatsApp','Rastreio pedido','Carla S.','Normal','Aberto'],
+        ['ATD-2846','João Pedro','E-mail','Troca solicitação','Paulo R.','Alta','Em atend.'],
+        ['ATD-2845','Verão Total','Chat','Pedido B2B dúvida','Maria T.','Alta','Em atend.'],
+        ['ATD-2844','Fernanda M.','WhatsApp','Pagamento recusado','Carla S.','Urgente','Aberto'],
+        ['ATD-2843','@sol_praia','Instagram','Parceria influencer','Renata K.','Normal','Aguardando'],
+      ].map(([id,c,ch,a,at,pr,st])=>`<tr>
+        <td style="font-family:var(--font-mono);font-size:11px;color:var(--c-neon)">${id}</td>
+        <td>${c}</td>
+        <td><span class="tag tag-blue">${ch}</span></td>
+        <td style="font-size:11px">${a}</td>
+        <td style="font-size:11px;color:var(--c-gray)">${at}</td>
+        <td><span class="tag ${pr==='Urgente'?'tag-red':pr==='Alta'?'tag-yellow':'tag-green'}">${pr}</span></td>
+        <td><span class="tag ${st==='Aberto'?'tag-yellow':st==='Em atend.'?'tag-blue':'tag-green'}">${st}</span></td>
+      </tr>`).join('')}
+    </table>
+  </div>`;
+}
+
+function buildPOPs(){
+  return `
+  <div class="page-header"><div><div class="page-title">POPs — Procedimentos Operacionais</div><div class="page-sub">CENTRAL DE CONHECIMENTO CORPORATIVO</div></div>
+    <button class="btn btn-primary" style="font-size:11px;padding:8px 16px">+ NOVO POP</button>
+  </div>
+  <div class="two-col">
+    ${[
+      ['Atendimento ao Cliente','Fluxo de atendimento B2C e B2B, SLA, escalonamento','Atualizado: 02/05/26','COMERCIAL'],
+      ['Gestão de Pedidos','Recebimento, validação, aprovação e workflow de pedidos','Atualizado: 01/05/26','OPERACIONAL'],
+      ['Trocas e Devoluções','Política, prazos, procedimentos e reembolso','Atualizado: 28/04/26','LOGÍSTICA'],
+      ['Controle de Qualidade','Inspeção, aprovação e rejeição de peças na produção','Atualizado: 25/04/26','PRODUÇÃO'],
+      ['Expedição e Embalagem','Embalagem, etiquetagem, despacho e rastreamento','Atualizado: 20/04/26','LOGÍSTICA'],
+      ['Segurança da Informação','Política de senhas, MFA, acesso e proteção de dados','Atualizado: 15/04/26','TI'],
+    ].map(([t,d,dt,cat])=>`
+      <div class="widget" style="cursor:pointer">
+        <div style="display:flex;justify-content:space-between;margin-bottom:8px"><div class="widget-title">${t}</div><span class="tag tag-blue" style="font-size:9px">${cat}</span></div>
+        <div style="font-size:11px;color:var(--c-gray);margin-bottom:12px;line-height:1.6">${d}</div>
+        <div style="font-size:9px;font-family:var(--font-mono);color:var(--c-gray)">${dt}</div>
+      </div>`).join('')}
+  </div>`;
+}
+
+function buildTarefas(){
+  return `
+  <div class="page-header"><div><div class="page-title">Gestão de Tarefas</div><div class="page-sub">KANBAN CORPORATIVO</div></div>
+    <button class="btn btn-primary" style="font-size:11px;padding:8px 16px">+ NOVA TAREFA</button>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+    ${[['A FAZER','4',['Revisar proposta B2B Beach Club ES','Atualizar POP de expedição','Reunião com equipe comercial'],'tag-yellow'],
+       ['EM PROGRESSO','3',['Análise de trocas pendentes — lote Praia Store','Configuração integração ERP','Relatório mensal financeiro'],'tag-blue'],
+       ['REVISÃO','2',['DRE abril 2026 — aguardando aprovação CFO','Novo catálogo verão 2026'],'tag-yellow'],
+       ['CONCLUÍDO','8',['Setup sistema MFA todos colaboradores','Inventário estoque abril','Coleção primavera entregue'],'tag-green'],
+    ].map(([col,cnt,items,tag])=>`
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+          <span style="font-size:12px;font-weight:700">${col}</span>
+          <span class="tag ${tag}" style="font-size:9px">${cnt}</span>
+        </div>
+        ${items.map(t=>`<div class="widget" style="margin-bottom:8px;padding:12px;cursor:pointer">
+          <div style="font-size:11px;line-height:1.5">${t}</div>
+        </div>`).join('')}
+      </div>`).join('')}
+  </div>`;
+}
+
+function buildLogs(){
+  return `
+  <div class="page-header"><div><div class="page-title">Logs & Auditoria</div><div class="page-sub">RASTREABILIDADE COMPLETA · IMUTÁVEL</div></div></div>
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="kpi-label">EVENTOS HOJE</div><div class="kpi-val">4.284</div></div>
+    <div class="kpi-card"><div class="kpi-label">ALERTAS SEGURANÇA</div><div class="kpi-val" style="color:#F87171">2</div></div>
+    <div class="kpi-card"><div class="kpi-label">USUÁRIOS ATIVOS</div><div class="kpi-val" style="color:var(--c-neon)">48</div></div>
+    <div class="kpi-card"><div class="kpi-label">INTEGRIDADE</div><div class="kpi-val" style="color:#22D3AA">100%</div></div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <tr><th>TIMESTAMP</th><th>USUÁRIO</th><th>IP</th><th>AÇÃO</th><th>MÓDULO</th><th>NÍVEL</th></tr>
+      ${[
+        ['09:38:42','r.cunha','177.92.x.x','Visualizou relatório financeiro Q2','Financeiro','INFO'],
+        ['09:21:14','p.santos','192.168.x.x','Solicitou exportação base B2B','CRM','WARN'],
+        ['08:54:03','DESCONHECIDO','201.47.x.x','Tentativa acesso não autorizado','Financeiro','CRÍTICO'],
+        ['08:31:28','m.costa','192.168.x.x','Aprovou pedido B2B #48288','Pedidos','INFO'],
+        ['08:12:54','a.lima','192.168.x.x','Login realizado — MFA verificado','Sistema','INFO'],
+        ['07:58:33','sistema','interno','Backup automático noturno concluído','Sistema','INFO'],
+        ['07:45:21','r.cunha','177.92.x.x','Login executivo — MFA OK','Sistema','INFO'],
+      ].map(([ts,u,ip,a,m,nv])=>`<tr>
+        <td style="font-family:var(--font-mono);font-size:10px;color:var(--c-gray)">${ts}</td>
+        <td style="font-family:var(--font-mono);font-size:11px;color:var(--c-neon)">${u}</td>
+        <td style="font-family:var(--font-mono);font-size:10px;color:var(--c-gray)">${ip}</td>
+        <td style="font-size:11px">${a}</td>
+        <td style="font-size:11px;color:var(--c-gray)">${m}</td>
+        <td><span class="tag ${nv==='CRÍTICO'?'tag-red':nv==='WARN'?'tag-yellow':'tag-green'}">${nv}</span></td>
+      </tr>`).join('')}
+    </table>
+  </div>`;
+}
+
+function buildPermissoes(){
+  return `
+  <div class="page-header"><div><div class="page-title">Controle de Permissões</div><div class="page-sub">RBAC + ABAC · ZERO TRUST</div></div></div>
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="kpi-label">USUÁRIOS ATIVOS</div><div class="kpi-val">284</div></div>
+    <div class="kpi-card"><div class="kpi-label">PERFIS DE ACESSO</div><div class="kpi-val" style="color:var(--c-neon)">12</div></div>
+    <div class="kpi-card"><div class="kpi-label">ACESSOS BLOQ. HOJE</div><div class="kpi-val" style="color:#F87171">3</div></div>
+    <div class="kpi-card"><div class="kpi-label">MFA ATIVADO</div><div class="kpi-val" style="color:#22D3AA">97%</div></div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <tr><th>USUÁRIO</th><th>PERFIL</th><th>DEPARTAMENTO</th><th>MÓDULOS</th><th>MFA</th><th>ÚLTIMO ACESSO</th><th>STATUS</th></tr>
+      ${[
+        ['Ricardo Cunha','CEO / Executivo','Diretoria','TODOS + EXECUTIVO','✓','08/05/26 09:45','Ativo'],
+        ['Ana Lima','Gestora Op.','Operações','Pedidos,Prod,Estoque,CRM','✓','08/05/26 08:12','Ativo'],
+        ['Paulo Santos','Analista CRM','Comercial','CRM,Pedidos,Atend.','✓','08/05/26 09:21','Ativo'],
+        ['Maria Costa','Financeiro','Financeiro','Financeiro,Relatórios','✓','08/05/26 08:31','Ativo'],
+        ['Carlos Freitas','Produção','Manufatura','Produção,Estoque','✗','07/05/26 17:44','Ativo'],
+        ['Sistema ERP','Integração','TI','API Read-Only','N/A','Contínuo','Ativo'],
+      ].map(([n,p,d,m,mfa,ul,st])=>`<tr>
+        <td style="font-weight:600">${n}</td>
+        <td><span class="tag tag-blue" style="font-size:9px">${p}</span></td>
+        <td style="font-size:11px;color:var(--c-gray)">${d}</td>
+        <td style="font-size:10px;color:var(--c-gray)">${m}</td>
+        <td style="text-align:center;color:${mfa==='✓'?'#22D3AA':'#F87171'}">${mfa}</td>
+        <td style="font-family:var(--font-mono);font-size:10px;color:var(--c-gray)">${ul}</td>
+        <td><span class="tag tag-green">${st}</span></td>
+      </tr>`).join('')}
+    </table>
+  </div>`;
+}
+
+function renderOpCharts(page){
+  if(page==='dashboard'){
+    const chartEl = document.getElementById('op-bar-chart');
+    const labelsEl = document.getElementById('op-bar-labels');
+    if(!chartEl) return;
+    const data = [72,84,61,90,78,64,88];
+    const labels = ['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
+    chartEl.innerHTML = data.map((v,i)=>`<div class="bar" style="height:${v}%" title="${labels[i]}: ${Math.round(v*12)} pedidos"><span class="bar-label">${labels[i]}</span></div>`).join('');
+    if(labelsEl) labelsEl.innerHTML = '';
+  }
+}
+
+// Init
+function initOpDashboard(){
+  const content = document.getElementById('op-content');
+  if(content) {
+    content.innerHTML = buildDashboard();
+    renderOpCharts('dashboard');
+  }
+}
+
+// Exec sparklines
+function buildSparks(){
+  const configs = [
+    {id:'spark-rev', data:[40,55,48,62,58,70,64,75,68,80,76,88]},
+    {id:'spark-ebitda', data:[28,30,29,31,32,30,33,31,34,32,33,33]},
+    {id:'spark-margin', data:[22,21,23,22,20,21,22,21,20,22,21,21]},
+    {id:'spark-orders', data:[80,85,78,92,88,95,90,100,96,104,108,128]},
+  ];
+  configs.forEach(({id,data})=>{
+    const el = document.getElementById(id);
+    if(!el) return;
+    const max = Math.max(...data);
+    el.innerHTML = data.map(v=>`<div class="exec-spark-bar" style="height:${Math.round(v/max*100)}%"></div>`).join('');
+  });
+  
+  // Intel charts
+  const icData = [
+    [60,70,65,80,75,85,80,90,87,92,89,95],
+    [50,60,55,70,65,75,72,80,78,84,82,88],
+    [40,50,55,60,58,65,62,68,64,70,66,72],
+    [60,65,68,70,72,74,72,75,74,76,75,74],
+    [20,25,22,18,20,19,18,20,19,18,17,18],
+    [38,40,42,41,43,44,42,43,44,42,43,42],
+  ];
+  for(let i=1;i<=6;i++){
+    const el = document.getElementById('ic'+i);
+    if(!el) return;
+    const data = icData[i-1];
+    const max = Math.max(...data);
+    el.innerHTML = data.map(v=>`<div class="intel-mini-bar" style="height:${Math.round(v/max*100)}%"></div>`).join('');
+  }
+  
+  // Revenue chart bars
+  const revEl = document.getElementById('exec-revenue-chart');
+  if(revEl){
+    const months = ['Jun','Jul','Ago','Set','Out','Nov','Dez','Jan','Fev','Mar','Abr','Mai'];
+    const vals = [65,72,68,80,88,95,70,84,90,96,102,110];
+    const max = Math.max(...vals);
+    revEl.innerHTML = vals.map((v,i)=>`<div class="exec-bar" style="height:${Math.round(v/max*100)}%;position:relative"><span class="exec-bar-lbl">${months[i]}</span></div>`).join('');
+  }
+}
+
+// Clock update
+function updateClock(){
+  const now = new Date();
+  const fmt = now.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+  const el = document.getElementById('exec-live-clock');
+  if(el) el.textContent = `ÚLTIMA ATUALIZ. ${fmt}`;
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', e=>{
+  if(e.key==='1') showScreen('landing');
+  if(e.key==='2') showScreen('login');
+  if(e.key==='3') showScreen('system-op');
+  if(e.key==='4') showScreen('system-exec');
+});
+
+// Init
+setTimeout(()=>{
+  initOpDashboard();
+  buildSparks();
+  updateClock();
+  setInterval(updateClock, 30000);
+}, 100);
+</script>
+</body>
+</html>
